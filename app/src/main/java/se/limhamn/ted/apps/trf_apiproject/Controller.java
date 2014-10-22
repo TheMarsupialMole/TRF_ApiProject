@@ -9,11 +9,10 @@ public class Controller {
     public Controller(){
 
         asyncQueryEngine = new AsyncQueryEngine();
-        asyncQueryEngine.setAndSearchRecipe("lasagna");
+//        asyncQueryEngine.setAndSearchRecipe("lasagna");
     }
 
-
-    public void test() {
-        
+    public void searchRecipe(String str) {
+        asyncQueryEngine.setAndSearchRecipe(str);
     }
 }
