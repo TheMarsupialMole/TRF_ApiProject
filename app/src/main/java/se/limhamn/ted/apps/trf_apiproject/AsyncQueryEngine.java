@@ -36,7 +36,7 @@ public class AsyncQueryEngine extends AsyncTask {
 
     private final String USER_AGENT = "Mozilla/5.0";
 
-    private boolean x = true;
+    private boolean x = true;//vilkor för whilesats nödvändig för att return ska fungera
 
     private String recipe = "";
     private String url = "";
@@ -44,20 +44,20 @@ public class AsyncQueryEngine extends AsyncTask {
 
     public AsyncQueryEngine(){
         this.execute();
-    }
+    } //startar tråden
 
-    public void setAndSearchRecipe(String recipe){
+    public void setAndSearchRecipe(String recipe){ //skapar en url med önskat recept//sökvägen
         this.recipe = recipe;
         url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
-                + recipe
+                + recipe //receptet man söker på
                 + "&api_key="+apiKey;
     }
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected Object doInBackground(Object[] objects) { //en tråd som används för att hämta info från APIerna
 
         while(x = true) {
-            if(!url.equals("")) {
+            if(!url.equals("")) { //om url inte är tom genomför if satsen
                 URL obj = null;
                 try {
                     obj = new URL(url);
