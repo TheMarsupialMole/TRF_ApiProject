@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        controller = new Controller();
+        controller = new Controller(this);
     }
 
 
