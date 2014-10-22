@@ -1,6 +1,7 @@
 package se.limhamn.ted.apps.trf_apiproject;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 /**
  * Created by Ted on 2014-10-21.
@@ -10,5 +11,9 @@ public class Controller {
 
     public Controller(){
         apiRequestRecipe = new ApiRequestRecipe();
+    }
+
+    public void test() {
+        
     }
 }
