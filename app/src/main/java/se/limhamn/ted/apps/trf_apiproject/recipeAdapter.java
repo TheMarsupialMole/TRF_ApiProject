@@ -9,18 +9,30 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by radde on 14-10-22.
+ * Custom ArrayAdapter for listing recipes
  */
 public class recipeAdapter extends ArrayAdapter {
     private MainActivity context;
     private ArrayList<String> recipeArray;
 
+    /**
+     * Constructor with a MainActivity parameter and an ArrayList-parameter with recipes
+     * @param context
+     * @param recipeArray
+     */
     public recipeAdapter(MainActivity context, ArrayList<String> recipeArray) {
         super(context, R.layout.recipe_layout, recipeArray);
         this.context = context;
         this.recipeArray = recipeArray;
     }
 
+    /**
+     * Overridden method for a custom layout and sets the text in the textView
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = convertView;
