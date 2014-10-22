@@ -30,6 +30,7 @@ public class SearchFragment extends Fragment {
         this.controller = controller;
     }
 
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
