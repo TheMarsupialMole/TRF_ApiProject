@@ -42,7 +42,7 @@ public class SearchFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.searchRecipe(etRecipeSearch.getText().toString());
+              //  controller.searchRecipe(etRecipeSearch.getText().toString());
             }
         });
         return view;

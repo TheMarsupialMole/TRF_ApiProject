@@ -113,7 +113,7 @@ public class AsyncQueryEngine extends AsyncTask {
 
                 String s = String.valueOf(response);
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
+                        JSONObject jsonObject = new JSONObject(s);
                     String nisse = "sdf";
                 } catch (JSONException e) {
                     e.printStackTrace();
