@@ -3,6 +3,7 @@ package se.limhamn.ted.apps.trf_apiproject;
 import android.os.AsyncTask;
 import android.util.JsonReader;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,6 +23,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 /**
  * Created by Ted on 2014-10-21.
@@ -48,9 +50,8 @@ public class AsyncQueryEngine extends AsyncTask {
 
     public void setAndSearchRecipe(String recipe){ //skapar en url med önskat recept//sökvägen
         this.recipe = recipe;
-        url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw="
-                + recipe //receptet man söker på
-                + "&api_key="+apiKey;
+        url = "http://api.bigoven.com/recipes?pg=1&rpp=25&title_kw=" + recipe  + "&api_key="+apiKey;
+
     }
 
     @Override
@@ -65,6 +66,7 @@ public class AsyncQueryEngine extends AsyncTask {
                     e.printStackTrace();
                 }
                 HttpURLConnection con = null;
+
                 try {
                     con = (HttpURLConnection) obj.openConnection();
                 } catch (IOException e) {
@@ -79,7 +81,7 @@ public class AsyncQueryEngine extends AsyncTask {
                 }
 
                 //add request header
-                con.setRequestProperty("User-Agent", USER_AGENT);
+                con.setRequestProperty("accept", "application/json");
 
                 int responseCode = 0;
                 try {
@@ -113,7 +115,14 @@ public class AsyncQueryEngine extends AsyncTask {
 
                 String s = String.valueOf(response);
                 try {
-                        JSONObject jsonObject = new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(s);
+                    JSONArray jArr = jsonObject.getJSONArray("Results");
+                    ArrayList<RecipeBase> recipeList = new ArrayList<RecipeBase>();
+
+                    for(int i = 0; i < jArr.length(); i++){
+                        recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category")));
+                    }
+
                     String nisse = "sdf";
                 } catch (JSONException e) {
                     e.printStackTrace();
