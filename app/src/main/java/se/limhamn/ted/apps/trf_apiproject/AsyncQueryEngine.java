@@ -38,6 +38,8 @@ public class AsyncQueryEngine extends AsyncTask {
 
     private Controller controller;
 
+    private JSONArray jArr = null;
+
     private final String USER_AGENT = "Mozilla/5.0";
 
     private boolean x = true;//vilkor för whilesats nödvändig för att return ska fungera
@@ -124,15 +126,28 @@ public class AsyncQueryEngine extends AsyncTask {
                 String s = String.valueOf(response);
                 try {
                     JSONObject jsonObject = new JSONObject(s);
-                    JSONArray jArr = jsonObject.getJSONArray("Results");
-                    ArrayList<RecipeBase> recipeList = new ArrayList<RecipeBase>();
 
-                    for(int i = 0; i < jArr.length(); i++){
-                        recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category"),
-                                jArr.getJSONObject(i).getString("id")));
+                    if(jsonObject.has("Results")){
+                        jArr = jsonObject.getJSONArray("Results");
+                        ArrayList<RecipeBase> recipeList = new ArrayList<RecipeBase>();
+
+                        for (int i = 0; i < jArr.length(); i++) {
+                            recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category"),
+                                    jArr.getJSONObject(i).getString("RecipeID")));
+                        }
+                        publishProgress(recipeList);
+                        jArr = null;
                     }
+                    else if(jsonObject.has("Ingredients")){
+                        JSONArray jArr = jsonObject.getJSONArray("Ingredients");
+                        ArrayList<IngredientsBase> ingredientsList = new ArrayList<IngredientsBase>();
 
-                    publishProgress(recipeList);
+                        for (int i = 0; i < jArr.length(); i++) {
+                            ingredientsList.add(new RecipeBase(jArr.getJSONObject(i).getString("Name"), jArr.getJSONObject(i).getString("Quantity"),
+                                    jArr.getJSONObject(i).getString("MetricUnit")));
+                        }
+                        jArr = null;
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
