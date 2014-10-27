@@ -143,9 +143,10 @@ public class AsyncQueryEngine extends AsyncTask {
                         ArrayList<IngredientsBase> ingredientsList = new ArrayList<IngredientsBase>();
 
                         for (int i = 0; i < jArr.length(); i++) {
-                            ingredientsList.add(new RecipeBase(jArr.getJSONObject(i).getString("Name"), jArr.getJSONObject(i).getString("Quantity"),
+                            ingredientsList.add(new IngredientsBase(jArr.getJSONObject(i).getString("Name"), jArr.getJSONObject(i).getString("Quantity"),
                                     jArr.getJSONObject(i).getString("MetricUnit")));
                         }
+                        publishProgress(ingredientsList);
                         jArr = null;
                     }
 
@@ -165,8 +166,11 @@ public class AsyncQueryEngine extends AsyncTask {
      *
      * @param arrList
      */
-    protected final void publishProgress(ArrayList<RecipeBase> arrList){//synkar med gui tråden
-        controller.setRecipeArray(arrList);
+    protected final void publishProgress(ArrayList arrList){//synkar med gui tråden
+        if(arrList.get(0) instanceof RecipeBase)
+            controller.setRecipeArray(arrList);
+        else if( arrList.get(0) instanceof IngredientsBase)
+            controller.setIngredientsArray(arrList);
     }
 
 }
