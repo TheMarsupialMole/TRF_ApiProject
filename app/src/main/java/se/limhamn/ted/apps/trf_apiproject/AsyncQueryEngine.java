@@ -36,6 +36,8 @@ public class AsyncQueryEngine extends AsyncTask {
     private OutputStream os;
     private DataOutputStream dos;
 
+    private Controller controller;
+
     private final String USER_AGENT = "Mozilla/5.0";
 
     private boolean x = true;//vilkor för whilesats nödvändig för att return ska fungera
@@ -44,7 +46,8 @@ public class AsyncQueryEngine extends AsyncTask {
     private String url = "";
     private String apiKey = "dvx7j5VyCichI8al74FY5T3iy62TT4fk";
 
-    public AsyncQueryEngine(){
+    public AsyncQueryEngine(Controller controller){
+        this.controller = controller;
         this.execute();
     } //startar tråden
 
@@ -123,7 +126,8 @@ public class AsyncQueryEngine extends AsyncTask {
                         recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category")));
                     }
 
-                    String nisse = "sdf";
+                    publishProgress(recipeList);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -135,5 +139,13 @@ public class AsyncQueryEngine extends AsyncTask {
 
     }
 
+
+    /**
+     *
+     * @param arrList
+     */
+    protected final void publishProgress(ArrayList<RecipeBase> arrList){//synkar med gui tråden
+        controller.setRecipeArray(arrList);
+    }
 
 }

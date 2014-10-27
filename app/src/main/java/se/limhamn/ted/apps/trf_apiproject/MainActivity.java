@@ -1,23 +1,35 @@
 package se.limhamn.ted.apps.trf_apiproject;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 
 public class MainActivity extends Activity {
 
     private Controller controller;
+    private FragmentManager fragmentManager;
+    private SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        controller = new Controller(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        controller = new Controller(this);
+        fragmentManager = getFragmentManager();
+        searchFragment = (SearchFragment)fragmentManager.findFragmentById(R.id.fragSearch);
+
     }
 
+    public SearchFragment getSearchFragment(){
+        return searchFragment;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
