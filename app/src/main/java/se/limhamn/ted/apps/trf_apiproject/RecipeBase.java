@@ -7,10 +7,12 @@ public class RecipeBase {
 
     private String title = "";
     private String category = "";
+    private String id = "";
 
-    public RecipeBase(String title, String category){
+    public RecipeBase(String title, String category, String id){
         this.title = title;
         this.category = category;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -29,4 +31,11 @@ public class RecipeBase {
         this.category = category;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

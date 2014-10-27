@@ -81,7 +81,7 @@ public class SearchFragment extends Fragment {
             recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    //controller.getMemberArray(groupArrayList.get(i).getName());
+                    controller.getRecipeIngredient(recipeArray.get(i).getId());
                 }
             });
         }

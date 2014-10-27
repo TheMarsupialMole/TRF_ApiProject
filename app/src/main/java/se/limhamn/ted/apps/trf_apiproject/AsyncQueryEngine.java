@@ -57,6 +57,11 @@ public class AsyncQueryEngine extends AsyncTask {
 
     }
 
+
+    public void getAndSetIngredients(String id) {
+        url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) { //en tråd som används för att hämta info från APIerna
 
@@ -123,7 +128,8 @@ public class AsyncQueryEngine extends AsyncTask {
                     ArrayList<RecipeBase> recipeList = new ArrayList<RecipeBase>();
 
                     for(int i = 0; i < jArr.length(); i++){
-                        recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category")));
+                        recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category"),
+                                jArr.getJSONObject(i).getString("id")));
                     }
 
                     publishProgress(recipeList);

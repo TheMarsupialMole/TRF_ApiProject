@@ -35,4 +35,8 @@ public class Controller {
     public ArrayList<RecipeBase> getRecipeArray(){
         return arrList;
     }
+
+    public void getRecipeIngredient(String id) {
+        asyncQueryEngine.getAndSetIngredients(id);
+    }
 }
