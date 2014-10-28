@@ -89,4 +89,8 @@ public class Controller {
     public String getNutritionString() {
         return nutritionInformation;
     }
+
+    public void stop() {
+        asyncQueryEngine.stop();
+    }
 }

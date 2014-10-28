@@ -198,6 +198,14 @@ public class AsyncQueryEngine extends AsyncTask {
                     e.printStackTrace();
                 }
                 url = "";
+
+            }
+            if (isCancelled()) {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -231,4 +239,7 @@ public class AsyncQueryEngine extends AsyncTask {
 
     }
 
+    public void stop() {
+        this.cancel(true);
+    }
 }

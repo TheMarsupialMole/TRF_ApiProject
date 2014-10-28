@@ -53,4 +53,10 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        controller.stop();
+    }
 }
