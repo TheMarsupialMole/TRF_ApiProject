@@ -51,6 +51,11 @@ public class Controller {
         ingredientsArray = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragSearch, new FragmentIngredients());
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    public void getNutritionFacts(String ingredientName) {
+        asyncQueryEngine.getAndSetNutritionFacts(ingredientName);
     }
 }
