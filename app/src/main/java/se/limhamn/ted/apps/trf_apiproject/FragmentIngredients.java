@@ -57,7 +57,7 @@ public class FragmentIngredients extends Fragment {
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    //controller.getRecipeIngredient(ingredientsBaseArrayList.get(i).getName());
+                controller.getNutritionFacts(ingredientsBaseArrayList.get(i).getName());
                 }
             });
         }

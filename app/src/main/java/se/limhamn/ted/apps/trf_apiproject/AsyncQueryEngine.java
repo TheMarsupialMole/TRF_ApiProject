@@ -59,9 +59,15 @@ public class AsyncQueryEngine extends AsyncTask {
 
     }
 
-
     public void getAndSetIngredients(String id) {
         url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
+    }
+
+    public void getAndSetNutritionFacts(String ingredientName) {
+
+        ingredientName = ingredientName.replace(" ", "%20");
+
+        url = "http://api.data.gov/usda/ndb/search/?format=json&q=" + ingredientName + "&api_key=kA5Rig6QQpYBNEyJQOeSSBsl6vYsJ3YaNBVoKnhA";
     }
 
     @Override
@@ -172,5 +178,4 @@ public class AsyncQueryEngine extends AsyncTask {
         else if( arrList.get(0) instanceof IngredientsBase)
             controller.setIngredientsArray(arrList);
     }
-
 }

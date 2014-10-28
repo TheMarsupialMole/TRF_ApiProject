@@ -2,6 +2,7 @@ package se.limhamn.ted.apps.trf_apiproject;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,13 @@ public class MainActivity extends Activity {
 
         fragmentManager = getFragmentManager();
         searchFragment = (SearchFragment)fragmentManager.findFragmentById(R.id.fragSearch);
+        if(searchFragment == null)
+            searchFragment = new SearchFragment();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragContain, searchFragment);
+        fragmentTransaction.commit();
+
+        
 
     }
 
