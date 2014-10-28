@@ -156,12 +156,13 @@ public class AsyncQueryEngine extends AsyncTask {
                         jArr = null;
                     }
                     else if(jsonObject.has("list")){
-                    //     jArr = jsonObject.get("list");
+                        JSONObject jo = (JSONObject) jsonObject.get("list");
+                        JSONArray jArr = (JSONArray) jo.get("item");
 
                         ArrayList<IngredientsDetail> ingredientsList = new ArrayList<IngredientsDetail>();
 
                         for (int i = 0; i < jArr.length(); i++) {
-                            ingredientsList.add(new IngredientsDetail(jArr.getJSONObject(i).getString("Name")));
+                            ingredientsList.add(new IngredientsDetail(jArr.getJSONObject(i).getString("name"),jArr.getJSONObject(i).getString("ndbno")));
                         }
                         publishProgress(ingredientsList);
                         jArr = null;

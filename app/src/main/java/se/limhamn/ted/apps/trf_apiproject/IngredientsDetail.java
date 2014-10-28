@@ -5,10 +5,12 @@ package se.limhamn.ted.apps.trf_apiproject;
  */
 public class IngredientsDetail {
     private String name;
+    private String id = "";
 
 
-    public IngredientsDetail(String name) {
+    public IngredientsDetail(String name, String id) {
         this.name = name;
+        this.id = id;
     }
 
     public String getName() {
@@ -19,4 +21,11 @@ public class IngredientsDetail {
         this.name = name;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
