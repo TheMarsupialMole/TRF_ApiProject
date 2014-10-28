@@ -63,11 +63,15 @@ public class AsyncQueryEngine extends AsyncTask {
         url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
     }
 
-    public void getAndSetNutritionFacts(String ingredientName) {
+    public void getAndSetChoices(String ingredientName) {
 
         ingredientName = ingredientName.replace(" ", "%20");
 
         url = "http://api.data.gov/usda/ndb/search/?format=json&q=" + ingredientName + "&api_key=kA5Rig6QQpYBNEyJQOeSSBsl6vYsJ3YaNBVoKnhA";
+    }
+
+    public void getAndSetNutritionFacts(String id) {
+        url = "http://api.data.gov/usda/ndb/reports/?ndbno=" + id + "&type=f&format=json&api_key=kA5Rig6QQpYBNEyJQOeSSBsl6vYsJ3YaNBVoKnhA";
     }
 
     @Override
@@ -159,12 +163,34 @@ public class AsyncQueryEngine extends AsyncTask {
                         JSONObject jo = (JSONObject) jsonObject.get("list");
                         JSONArray jArr = (JSONArray) jo.get("item");
 
-                        ArrayList<IngredientsDetail> ingredientsList = new ArrayList<IngredientsDetail>();
+                        ArrayList<IngredientsDetail> ingredientsListDet = new ArrayList<IngredientsDetail>();
 
                         for (int i = 0; i < jArr.length(); i++) {
-                            ingredientsList.add(new IngredientsDetail(jArr.getJSONObject(i).getString("name"),jArr.getJSONObject(i).getString("ndbno")));
+                            ingredientsListDet.add(new IngredientsDetail(jArr.getJSONObject(i).getString("name"),jArr.getJSONObject(i).getString("ndbno")));
                         }
-                        publishProgress(ingredientsList);
+                        publishProgress(ingredientsListDet);
+                        jArr = null;
+                    }
+                    else if(jsonObject.has("report")){
+                        String nutritionInformation = "";
+                        JSONObject jo = (JSONObject) jsonObject.get("report");
+                        JSONObject joo = (JSONObject) jo.get("food");
+                        JSONArray jArr = (JSONArray) joo.get("nutrients");
+
+                        String name = "Name: " + joo.get("name").toString();
+
+                        JSONObject energy = (JSONObject) jArr.get(1);
+                        String enrj = energy.get("name") + ": " + energy.get("value per 100 g") + " " + energy.get("unit") + " per 100 g.";
+                        JSONObject fat = (JSONObject) jArr.get(4);
+                        String faat = fat.get("name") + ": " + fat.get("value per 100 g") + " " + fat.get("unit") + " per 100 g.";
+                        JSONObject carbs = (JSONObject) jArr.get(6);
+                        String carb = carbs.get("name") + ": " + carbs.get("value per 100 g") + " " + carbs.get("unit") + " per 100 g.";
+                        JSONObject protein = (JSONObject) jArr.get(3);
+                        String prot = protein.get("name") + ": " + protein.get("value per 100 g") + " " + protein.get("unit") + " per 100 g.";
+
+                        nutritionInformation = name + "\n\n" + enrj + "\n" + faat + "\n" + carb + "\n" + prot;
+
+                        publishProgress(nutritionInformation);
                         jArr = null;
                     }
 
@@ -189,9 +215,20 @@ public class AsyncQueryEngine extends AsyncTask {
             controller.setRecipeArray(arrList);
         else if( arrList.get(0) instanceof IngredientsBase)
             controller.setIngredientsArray(arrList);
-       // else if( arrList.get(0) instanceof IngredientsDetail)
+        else if( arrList.get(0) instanceof IngredientsDetail){
+            controller.setIngredientsSearchArray(arrList);
+        }
 
-
-           // controller.setIngDetArray(arrList);
     }
+
+    /**
+     *
+     * @param nutritionInformation
+     */
+    protected final void publishProgress(String nutritionInformation){//synkar med gui tråden
+
+        controller.setNutritionString(nutritionInformation);
+
+    }
+
 }

@@ -14,7 +14,10 @@ public class Controller {
     private SearchFragment frSearch;
     private ArrayList<RecipeBase> arrList;
     private ArrayList<IngredientsBase> ingredientsArray;
+    private ArrayList<IngredientsDetail> ingredientsDetail;
     private FragmentManager fm;
+    private String nutritionInformation = "";
+
     public Controller(MainActivity main){
         this.main = main;
 
@@ -47,6 +50,14 @@ public class Controller {
         asyncQueryEngine.getAndSetIngredients(id);
     }
 
+    public void getChoices(String ingredientName) {
+        asyncQueryEngine.getAndSetChoices(ingredientName);
+    }
+
+    public void getNutritionFacts(String id) {
+        asyncQueryEngine.getAndSetNutritionFacts(id);
+    }
+
     public void setIngredientsArray(ArrayList arrList) {
         ingredientsArray = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -56,14 +67,26 @@ public class Controller {
     }
 
     public void setIngredientsSearchArray(ArrayList arrList) {
-        ingredientsArray = arrList;
+        ingredientsDetail = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragContain, new IngredientsSearchFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
-    public void getNutritionFacts(String ingredientName) {
-        asyncQueryEngine.getAndSetNutritionFacts(ingredientName);
+    public ArrayList<IngredientsDetail> getIngredientsDetailArray() {
+        return ingredientsDetail;
+    }
+
+    public void setNutritionString(String nutritionInformation) {
+        this.nutritionInformation = nutritionInformation;
+    }
+
+    public void resetNutritionString() {
+        nutritionInformation = "";
+    }
+
+    public String getNutritionString() {
+        return nutritionInformation;
     }
 }

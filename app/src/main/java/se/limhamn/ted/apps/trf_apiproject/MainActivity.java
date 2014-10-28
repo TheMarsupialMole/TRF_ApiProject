@@ -23,6 +23,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //Add first fragment to the activity
         fragmentManager = getFragmentManager();
         searchFragment = (SearchFragment)fragmentManager.findFragmentById(R.id.fragSearch);
         if(searchFragment == null)
@@ -31,12 +33,6 @@ public class MainActivity extends Activity {
         fragmentTransaction.add(R.id.fragContain, searchFragment);
         fragmentTransaction.commit();
 
-        
-
-    }
-
-    public SearchFragment getSearchFragment(){
-        return searchFragment;
     }
 
     @Override
