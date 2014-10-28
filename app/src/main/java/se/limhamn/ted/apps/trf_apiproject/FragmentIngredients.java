@@ -48,16 +48,25 @@ public class FragmentIngredients extends Fragment {
         return view;
     }
 
+    /** Fyller ingredientsBaseArr med ingred från API
+     * Därefter skickas den in i adaptern och adaptern returnerar en vy med ett objekt
+     * "String" som visas på listan
+     */
+
+
     public void initList() {
         ingredientsBaseArrayList = controller.getIngredientsArray();
         if(ingredientsBaseArrayList != null) {
             ingredientsAdapter = new IngredientsAdapter(ctex, ingredientsBaseArrayList);
             listview.setAdapter(ingredientsAdapter);
+            /** Vid klick på listan hämtas nutritionfacts
+             *
+             */
 
             listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                controller.getNutritionFacts(ingredientsBaseArrayList.get(i).getName());
+                    controller.getNutritionFacts(ingredientsBaseArrayList.get(i).getName());
                 }
             });
         }
