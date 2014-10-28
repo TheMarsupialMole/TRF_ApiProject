@@ -50,7 +50,15 @@ public class Controller {
     public void setIngredientsArray(ArrayList arrList) {
         ingredientsArray = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragSearch, new FragmentIngredients());
+        fragmentTransaction.replace(R.id.fragContain, new FragmentIngredients());
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    public void setIngredientsSearchArray(ArrayList arrList) {
+        ingredientsArray = arrList;
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.fragContain, new IngredientsSearchFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
