@@ -30,6 +30,7 @@ public class Controller {
 //        asyncQueryEngine.setAndSearchRecipe("lasagna");
     }
 
+    //request to api
     public void searchRecipe(String str) {
         asyncQueryEngine.setAndSearchRecipe(str);
     }
@@ -46,19 +47,23 @@ public class Controller {
         return ingredientsArray;
     }
 
-
+    //request to api
     public void getRecipeIngredient(String id) {
         asyncQueryEngine.getAndSetIngredients(id);
     }
+
+    //request to api
 
     public void getChoices(String ingredientName) {
         asyncQueryEngine.getAndSetChoices(ingredientName);
     }
 
+    //request to api
     public void getNutritionFacts(String id) {
         asyncQueryEngine.getAndSetNutritionFacts(id);
     }
 
+    //-----------------------------------change fragment methods-----------------------------------
     public void setIngredientsArray(ArrayList arrList) {
         ingredientsArray = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -74,7 +79,8 @@ public class Controller {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
+//-------------------------------------------------------------------------------------------------
+    
     public ArrayList<IngredientsDetail> getIngredientsDetailArray() {
         return ingredientsDetail;
     }

@@ -1,6 +1,8 @@
 package se.limhamn.ted.apps.trf_apiproject;
 
+import android.annotation.TargetApi;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.JsonReader;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 /**
  * Created by Ted on 2014-10-21.
  */
+
 public class AsyncQueryEngine extends AsyncTask {
 
     private Socket socket;
@@ -66,7 +69,7 @@ public class AsyncQueryEngine extends AsyncTask {
 
     public void getAndSetChoices(String ingredientName) {
 
-        ingredientName = ingredientName.replace(" ", "%20");
+        ingredientName = ingredientName.replace(" ", "%20");    //puts code for blank character where necessary.
 
         url = "http://api.data.gov/usda/ndb/search/?format=json&q=" + ingredientName + "&api_key=kA5Rig6QQpYBNEyJQOeSSBsl6vYsJ3YaNBVoKnhA";
     }
@@ -82,27 +85,27 @@ public class AsyncQueryEngine extends AsyncTask {
             if(!url.equals("")) { //om url inte är tom genomför if satsen
                 URL obj = null;
                 try {
-                    obj = new URL(url);
+                    obj = new URL(url); //create new URL object based on the incoming url string.
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
                 HttpURLConnection con = null;
 
                 try {
-                    con = (HttpURLConnection) obj.openConnection();
+                    con = (HttpURLConnection) obj.openConnection(); //opens an http connection
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
                 // optional default is GET
                 try {
-                    con.setRequestMethod("GET");
+                    con.setRequestMethod("GET");    //specify the method to use when communication with the API
                 } catch (ProtocolException e) {
                     e.printStackTrace();
                 }
 
                 //add request header
-                con.setRequestProperty("accept", "application/json");
+                con.setRequestProperty("accept", "application/json");   //specify that you wat the reply in JSON form
 
                 int responseCode = 0;
                 try {
@@ -113,8 +116,7 @@ public class AsyncQueryEngine extends AsyncTask {
 
                 BufferedReader in = null;
                 try {
-                    in = new BufferedReader(
-                            new InputStreamReader(con.getInputStream()));
+                    in = new BufferedReader(new InputStreamReader(con.getInputStream())); //create new buffered reader
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -122,32 +124,32 @@ public class AsyncQueryEngine extends AsyncTask {
                 StringBuffer response = new StringBuffer();
 
                 try {
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
+                    while ((inputLine = in.readLine()) != null) {   //read one line while there are available lines
+                        response.append(inputLine); //add the line to the string buffer
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 try {
-                    in.close();
+                    in.close(); //close the connection
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                String s = String.valueOf(response);
+                String s = String.valueOf(response);    //get the string value of the buffer
                 try {
-                    JSONObject jsonObject = new JSONObject(s);
+                    JSONObject jsonObject = new JSONObject(s); //create new JSONobject
 
-                    if(jsonObject.has("Results")){
-                        jArr = jsonObject.getJSONArray("Results");
-                        ArrayList<RecipeBase> recipeList = new ArrayList<RecipeBase>();
+                    if(jsonObject.has("Results")){  //if the object has a field named Results
+                        jArr = jsonObject.getJSONArray("Results");  //get the array named results
+                        ArrayList<RecipeBase> recipeList = new ArrayList<RecipeBase>(); //create new array list to contain recipe base objects
 
                         for (int i = 0; i < jArr.length(); i++) {
                             recipeList.add(new RecipeBase(jArr.getJSONObject(i).getString("Title"), jArr.getJSONObject(i).getString("Category"),
-                                    jArr.getJSONObject(i).getString("RecipeID")));
+                                    jArr.getJSONObject(i).getString("RecipeID"))); //extract chosen values from the array and build a recipe base object using the values
                         }
-                        publishProgress(recipeList);
-                        jArr = null;
+                        publishProgress(recipeList);  //send arraylist to publish progress...which runs un the GUI thread
+                        jArr = null;    //reset jArr
                     }
                     else if(jsonObject.has("Ingredients")){
                         JSONArray jArr = jsonObject.getJSONArray("Ingredients");
@@ -203,7 +205,7 @@ public class AsyncQueryEngine extends AsyncTask {
             }
             if (isCancelled()) {
                 try {
-                    socket.close();
+                    socket.close(); //close network socket.
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -216,10 +218,12 @@ public class AsyncQueryEngine extends AsyncTask {
 
 
     /**
-     *
+     *This version of publish progress is used if an array list is passed as parameter
      * @param arrList
      */
     protected final void publishProgress(ArrayList arrList){//synkar med gui tråden
+
+        //check what has been received and send the array list to the correct method in the controller
         if(arrList.get(0) instanceof RecipeBase)
             controller.setRecipeArray(arrList);
         else if( arrList.get(0) instanceof IngredientsBase)
@@ -231,7 +235,7 @@ public class AsyncQueryEngine extends AsyncTask {
     }
 
     /**
-     *
+     *This version of publish progress is used if a string is passed as parameter
      * @param nutritionInformation
      */
     protected final void publishProgress(String nutritionInformation){//synkar med gui tråden

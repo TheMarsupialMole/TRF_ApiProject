@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="se.limhamn.ted.apps.trf_apiproject" >
 
+    <uses-sdk android:minSdkVersion="15" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
