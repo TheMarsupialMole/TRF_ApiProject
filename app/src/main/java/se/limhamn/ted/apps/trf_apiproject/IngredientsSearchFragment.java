@@ -78,7 +78,7 @@ public class IngredientsSearchFragment extends Fragment {
                     if(!nutritionString.equals("")){
                         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-                        alert.setTitle("Pick date interval");
+                        alert.setTitle("Ingredient result");
                         alert.setMessage(nutritionString);
 
                         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
