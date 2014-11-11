@@ -2,6 +2,7 @@ package se.limhamn.ted.apps.trf_apiproject;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,10 @@ public class Controller {
     private SearchFragment frSearch;
     private ArrayList<RecipeBase> arrList;
     private ArrayList<IngredientsBase> ingredientsArray;
+    private ArrayList<IngredientsDetail> ingredientsDetail;
     private FragmentManager fm;
+    private String nutritionInformation = "";
+
     public Controller(MainActivity main){
         this.main = main;
 
@@ -26,6 +30,7 @@ public class Controller {
 //        asyncQueryEngine.setAndSearchRecipe("lasagna");
     }
 
+    //request to api
     public void searchRecipe(String str) {
         asyncQueryEngine.setAndSearchRecipe(str);
     }
@@ -42,11 +47,23 @@ public class Controller {
         return ingredientsArray;
     }
 
-
+    //request to api
     public void getRecipeIngredient(String id) {
         asyncQueryEngine.getAndSetIngredients(id);
     }
 
+    //request to api
+
+    public void getChoices(String ingredientName) {
+        asyncQueryEngine.getAndSetChoices(ingredientName);
+    }
+
+    //request to api
+    public void getNutritionFacts(String id) {
+        asyncQueryEngine.getAndSetNutritionFacts(id);
+    }
+
+    //-----------------------------------change fragment methods-----------------------------------
     public void setIngredientsArray(ArrayList arrList) {
         ingredientsArray = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
@@ -56,14 +73,31 @@ public class Controller {
     }
 
     public void setIngredientsSearchArray(ArrayList arrList) {
-        ingredientsArray = arrList;
+        ingredientsDetail = arrList;
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragContain, new IngredientsSearchFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+//-------------------------------------------------------------------------------------------------
+    
+    public ArrayList<IngredientsDetail> getIngredientsDetailArray() {
+        return ingredientsDetail;
+    }
 
-    public void getNutritionFacts(String ingredientName) {
-        asyncQueryEngine.getAndSetNutritionFacts(ingredientName);
+    public void setNutritionString(String nutritionInformation) {
+        this.nutritionInformation = nutritionInformation;
+    }
+
+    public void resetNutritionString() {
+        nutritionInformation = "";
+    }
+
+    public String getNutritionString() {
+        return nutritionInformation;
+    }
+
+    public void stop() {
+        asyncQueryEngine.stop();
     }
 }

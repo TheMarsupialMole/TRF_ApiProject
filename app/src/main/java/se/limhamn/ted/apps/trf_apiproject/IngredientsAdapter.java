@@ -44,11 +44,21 @@ public class IngredientsAdapter extends ArrayAdapter {
             itemView = inflater.inflate(R.layout.ingredients_list, parent, false);
         }
 
-        IngredientsBase currentIngredient = (IngredientsBase)ingredientsArray.get(position);
+        if(ingredientsArray.get(0) instanceof IngredientsBase) {
 
-        TextView ingredientsText = (TextView)itemView.findViewById(R.id.ingredientsText);
-        ingredientsText.setText(currentIngredient.getName() + "   " + currentIngredient.getQuantity() + "   " + currentIngredient.getMetricUnit());
+            IngredientsBase currentIngredient = (IngredientsBase) ingredientsArray.get(position);
 
+            TextView ingredientsText = (TextView) itemView.findViewById(R.id.ingredientsText);
+            ingredientsText.setText(currentIngredient.getName() + "   " + currentIngredient.getQuantity() + "   " + currentIngredient.getMetricUnit());
+
+        }
+        else{
+
+            IngredientsDetail currentIngredient = (IngredientsDetail) ingredientsArray.get(position);
+
+            TextView ingredientsText = (TextView) itemView.findViewById(R.id.ingredientsText);
+            ingredientsText.setText(currentIngredient.getName() + "   " + currentIngredient.getId());
+        }
         return itemView;
     }
 }

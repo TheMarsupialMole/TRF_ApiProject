@@ -34,29 +34,25 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
-//   // public void setController(Controller controller) {
-//        this.controller = controller;
-//    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        controller = ControllerDispenser.getController();
+        controller = ControllerDispenser.getController();   //Gain access to the instantiated controller.
         view = inflater.inflate(R.layout.fragment_search, container, false);
-        recipeListView = (ListView)view.findViewById(R.id.lvRecipeList);
-        initList();
-        etRecipeSearch = (EditText)view.findViewById(R.id.etSearch);
-        btnSearch = (Button)view.findViewById(R.id.btnSearchRecipe);
+        recipeListView = (ListView)view.findViewById(R.id.lvRecipeList);    //List view from XML;
+        initList(); //Initiate list
+
+        etRecipeSearch = (EditText)view.findViewById(R.id.etSearch);    //EditText to enter serach term into
+        btnSearch = (Button)view.findViewById(R.id.btnSearchRecipe);    //Button to start the search.
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recipeArray = null;
                 controller.searchRecipe(etRecipeSearch.getText().toString());
                 int i = 0;
-                while(recipeArray == null && i < 10){
-                    recipeArray = controller.getRecipeArray();
+                while(recipeArray == null && i < 10){   //Wait until something has been received or if it takes to long...break.
+                    recipeArray = controller.getRecipeArray();  //Search results in ArrayList form.
                     try {
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
