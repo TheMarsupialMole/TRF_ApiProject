@@ -155,6 +155,18 @@ public class AsyncQueryEngine extends AsyncTask {
                         publishProgress(ingredientsList);
                         jArr = null;
                     }
+                    else if(jsonObject.has("list")){
+                        JSONObject jo = (JSONObject) jsonObject.get("list");
+                        JSONArray jArr = (JSONArray) jo.get("item");
+
+                        ArrayList<IngredientsDetail> ingredientsList = new ArrayList<IngredientsDetail>();
+
+                        for (int i = 0; i < jArr.length(); i++) {
+                            ingredientsList.add(new IngredientsDetail(jArr.getJSONObject(i).getString("name"),jArr.getJSONObject(i).getString("ndbno")));
+                        }
+                        publishProgress(ingredientsList);
+                        jArr = null;
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -177,5 +189,9 @@ public class AsyncQueryEngine extends AsyncTask {
             controller.setRecipeArray(arrList);
         else if( arrList.get(0) instanceof IngredientsBase)
             controller.setIngredientsArray(arrList);
+       // else if( arrList.get(0) instanceof IngredientsDetail)
+
+
+           // controller.setIngDetArray(arrList);
     }
 }
